@@ -1,0 +1,41 @@
+{
+	"info": {
+		"_postman_id": "0fba78b8-1cb7-4929-9804-d4d5ba653aab",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "demo",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstname\": \"Miguel\",\r\n    \"lastname\": \"Perez\" \r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/api/clients/610ae544211d650764b8c2ae",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"clients",
+						"610ae544211d650764b8c2ae"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
