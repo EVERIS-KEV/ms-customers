@@ -5,22 +5,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.everis.clientservice.dto.message;
-import com.everis.clientservice.model.client;
-import com.everis.clientservice.repository.clientRepository;
- 
+import com.everis.clientservice.model.customer; 
+import com.everis.clientservice.repository.customerRepository;
+import com.everis.clientservice.repository.typeCustomerRepository;
+
 import reactor.core.publisher.*; 
 
 @Service
 @Transactional
-public class clientService {
+public class customerService {
 	@Autowired
-	clientRepository repository;  
+	customerRepository repository; 
 	
-	public client searchClient(String id) {
+	@Autowired
+	typeCustomerRepository repositoryType;  
+	
+	public customer searchClient(String id) {
 		return repository.findById(id).get();
 	}
 	
-	public Mono<Object> save(client obj) {  
+	public Mono<Object> save(customer obj) {  
 		String m = "Datos registrados.";
 		
 		try {
@@ -32,6 +36,7 @@ public class clientService {
 		} catch (Exception e) {
 			m = "Datos inválidos.";
 		} 
+			
 		
 		return Mono.just(new message(m));
 	}
@@ -45,7 +50,7 @@ public class clientService {
 	
 	public Mono<Object> update(String id, String firstname, String lastname){
 		if( repository.existsById(id) ) {
-			client obj = new client(id, firstname, lastname); 
+			customer obj = new customer(id, firstname, lastname, null); 
 			return save(obj);
 		}
 		
@@ -63,8 +68,8 @@ public class clientService {
 		return Mono.just(new message(m));
 	}
 	
-	public Mono<Object> register(String firstname, String lastname){
-		client obj = new client(null, firstname, lastname);
+	public Mono<Object> register(String firstname, String lastname, String typecustomer){
+		customer obj = new customer(null, firstname, lastname, repositoryType.findByDescription(typecustomer));
 		return save(obj);
 	}
 	

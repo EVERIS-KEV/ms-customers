@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor 
 @AllArgsConstructor 
 
-public class clientFrom {
+public class customerFrom {
 	private String idclient;
 	
 	@NotBlank(message= "El campo nombre no debe estar vacio.")
@@ -18,4 +18,7 @@ public class clientFrom {
 	@NotBlank(message= "El campo apellido no debe estar vacio.")
 	@Size(min = 4, message = "El campo apellido de tener mas de 4 carácteres como mínimo.")
 	private String lastname;  
+	
+	@NotBlank(message= "El campo tipo no debe estar vacio.")
+	private String typecustomer;  
 }

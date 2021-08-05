@@ -4,9 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication; 
 
 @SpringBootApplication 
-public class ClientServiceApplication { 
+public class customertServiceApplication { 
 	public static void main(String[] args) {
-		SpringApplication.run(ClientServiceApplication.class, args);
+		SpringApplication.run(customertServiceApplication.class, args);
 		System.out.println("-SERVER 8080.");
 	}
 
