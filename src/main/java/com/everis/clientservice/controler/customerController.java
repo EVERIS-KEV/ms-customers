@@ -1,71 +1,92 @@
-package com.everis.clientservice.controler; 
+package com.everis.clientservice.controler;
 
+import com.everis.clientservice.dto.*;
+import com.everis.clientservice.service.customerService;
 import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import com.everis.clientservice.service.customerService;
-import com.everis.clientservice.service.typeCustomerService;
-import com.everis.clientservice.dto.*; 
-
-import reactor.core.publisher.*; 
+import reactor.core.publisher.*;
 
 @RestController
-@CrossOrigin(origins = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
-@RequestMapping("/api/clients")
+@CrossOrigin(
+  origins = "*",
+  methods = {
+    RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE
+  }
+)
+@RequestMapping("/api/customers")
 public class customerController {
-	@Autowired 
-	private customerService serviceCustomer;
-	@Autowired 
-	private typeCustomerService serviceCustomerType;
-	
-	@GetMapping("/")
-	public Flux<Object> list(){
-		return serviceCustomer.listAll();
-	}
-	
-	@GetMapping("/{id}")
-	public Mono<Object> details(@PathVariable("id") String id){
-		return serviceCustomer.detailsClient(id);
-	}
-	
-	@PutMapping("/update/{id}")
-	public Mono<Object> update(@PathVariable("id") String id, @RequestBody @Valid  customerFrom from, BindingResult bindinResult) {
-		String msg = ""; 
-		
-		if (bindinResult.hasErrors()) {
-			for (int i = 0; i < bindinResult.getAllErrors().size(); i++) 
-				msg = bindinResult.getAllErrors().get(0).getDefaultMessage();
-			return Mono.just(new message(msg));
-		} 
-		
-		if (!serviceCustomerType.findByName( from.getTypecustomer() )) 
-			return Mono.just(new message("Tipo incorrecto."));
-		
-		return serviceCustomer.update(id, from.getFirstname(), from.getLastname());
-	}
-	
-	@PostMapping("/save")
-	public Mono<Object> create(@RequestBody @Valid customerFrom from, BindingResult bindinResult) {
-		String msg = ""; 
-		
-		if (bindinResult.hasErrors()) {
-			for (int i = 0; i < bindinResult.getAllErrors().size(); i++) 
-				msg = bindinResult.getAllErrors().get(0).getDefaultMessage();
-			return Mono.just(new message(msg));
-		}  
-		
-		if (!serviceCustomerType.findByName( from.getTypecustomer() )) 
-			return Mono.just(new message("Tipo incorrecto."));
-		
-		return serviceCustomer.register(from.getFirstname(), from.getLastname(), from.getTypecustomer());
-	}
-	
-	@DeleteMapping("/delete/{id}")
-	public Mono<Object> update(@PathVariable("id") String id){
-		return serviceCustomer.delete(id);
-	}
-	
+  @Autowired
+  private customerService serviceCustomer;
+
+  @GetMapping("/")
+  public Flux<Object> list() {
+    
+    return serviceCustomer.listAll();
+  }
+
+  @GetMapping("/dni/{dni}")
+  public Mono<Object> findByDni(@PathVariable("dni") String dni) {
+    return serviceCustomer.searchByDni(dni);
+  }
+
+  @GetMapping("/{id}")
+  public Mono<Object> details(@PathVariable("id") String id) {
+    return serviceCustomer.detailsClient(id);
+  }
+  
+  @GetMapping("/verifyId/{id}")
+  public Mono<Boolean> verify(@PathVariable("id") String id) {
+	  return serviceCustomer.verifyId(id);
+  }
+
+  @PutMapping("/update/{id}")
+  public Mono<Object> update(
+    @PathVariable("id") String id,
+    @RequestBody @Valid customerFrom from,
+    BindingResult bindinResult
+  ) {
+    String msg = "";
+
+    if (bindinResult.hasErrors()) {
+      for (int i = 0; i < bindinResult.getAllErrors().size(); i++) msg =
+        bindinResult.getAllErrors().get(0).getDefaultMessage();
+      return Mono.just(new message(msg));
+    }
+
+    return serviceCustomer.update(
+      id,
+      from.getDni(),
+      from.getFirstname(),
+      from.getLastname(),
+      from.getTypecustomer()
+    );
+  }
+
+  @PostMapping("/save")
+  public Mono<Object> create(
+    @RequestBody @Valid customerFrom from,
+    BindingResult bindinResult
+  ) {
+    String msg = "";
+
+    if (bindinResult.hasErrors()) {
+      for (int i = 0; i < bindinResult.getAllErrors().size(); i++) msg =
+        bindinResult.getAllErrors().get(0).getDefaultMessage();
+      return Mono.just(new message(msg));
+    }
+
+    return serviceCustomer.register(
+      from.getDni(),
+      from.getFirstname(),
+      from.getLastname(),
+      from.getTypecustomer()
+    );
+  }
+
+  @DeleteMapping("/delete/{id}")
+  public Mono<Object> update(@PathVariable("id") String id) {
+    return serviceCustomer.delete(id);
+  }
 }

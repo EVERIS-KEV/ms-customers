@@ -1,11 +1,11 @@
 package com.everis.clientservice.dto;
 
-import lombok.*; 
+import lombok.*;
 
-@Getter 
+@Getter
 @Setter
-@NoArgsConstructor 
-@AllArgsConstructor 
+@NoArgsConstructor
+@AllArgsConstructor
 public class message {
-	private String msg; 
+  private String msg;
 }

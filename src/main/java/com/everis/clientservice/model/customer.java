@@ -1,20 +1,20 @@
-package com.everis.clientservice.model; 
+package com.everis.clientservice.model;
 
+import lombok.*;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.*; 
-
-@Getter 
+@Getter
 @Setter
-@NoArgsConstructor 
-@AllArgsConstructor 
-
-@Document(collection  = "customers")
+@NoArgsConstructor
+@AllArgsConstructor
+@Document(collection = "customers")
 public class customer {
-	@Id
-	private String idclient;
-	private String firstname;
-	private String lastname;  
-	private typeCustomer type;
+  @Id
+  private String idclient;
+
+  private String dni;
+  private String firstname;
+  private String lastname;
+  private String type;
 }
