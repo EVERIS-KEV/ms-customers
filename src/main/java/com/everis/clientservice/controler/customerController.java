@@ -15,14 +15,13 @@ import reactor.core.publisher.*;
     RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE
   }
 )
-@RequestMapping("/api/customers")
+@RequestMapping()
 public class customerController {
   @Autowired
   private customerService serviceCustomer;
 
   @GetMapping("/")
   public Flux<Object> list() {
-    
     return serviceCustomer.listAll();
   }
 
@@ -35,10 +34,10 @@ public class customerController {
   public Mono<Object> details(@PathVariable("id") String id) {
     return serviceCustomer.detailsClient(id);
   }
-  
+
   @GetMapping("/verifyId/{id}")
   public Mono<Boolean> verify(@PathVariable("id") String id) {
-	  return serviceCustomer.verifyId(id);
+    return serviceCustomer.verifyId(id);
   }
 
   @PutMapping("/update/{id}")
