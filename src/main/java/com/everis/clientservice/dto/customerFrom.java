@@ -7,8 +7,7 @@ import lombok.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class customerFrom {
-  private String idclient;
+public class customerFrom { 
 
   @NotBlank(message = "El campo dni no debe estar vacio.")
   @Size(min = 8, message = "El campo dni de tener mas de 8 carÃ¡cteres como mÃ­nimo.")
