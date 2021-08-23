@@ -8,8 +8,8 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 @SpringBootApplication
 public class customertServiceApplication {
 
-  public static void main(String[] args) {
-    SpringApplication.run(customertServiceApplication.class, args);
-    System.out.println("-Micro servicio cliente, activado.");
-  }
+	public static void main(String[] args) {
+		SpringApplication.run(customertServiceApplication.class, args);
+		System.out.println("-Micro servicio cliente, activado.");
+	}
 }
